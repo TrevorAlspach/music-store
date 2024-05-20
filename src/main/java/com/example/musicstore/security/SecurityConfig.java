@@ -38,8 +38,6 @@ public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
     private final UserDetailsService userManagerConfig;
-    //@Autowired
-    //private DaoAuthenticationProvider daoAuthenticationProvider;
 
     @Order(1)
     @Bean
