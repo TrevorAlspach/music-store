@@ -31,7 +31,7 @@ public class AuthController {
     public ResponseEntity<Boolean> isTokenValid(@RequestHeader("Cookie") String token){
         logger.info(token);
 
-        return ResponseEntity.ok(this.jwtService.isTokenExpired(token));
+        return ResponseEntity.ok(!this.jwtService.isTokenExpired(token));
     }
 
     @PostMapping("/login")
