@@ -2,10 +2,12 @@ package com.example.musicstore.security;
 
 import com.example.musicstore.entities.User;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -61,8 +63,17 @@ public class JwtService {
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
-    private boolean isTokenExpired(String token) {
+    /*public boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
+    }*/
+
+    public boolean isTokenExpired(String token) {
+        try {
+            extractAllClaims(token);
+            return false;
+        } catch (ExpiredJwtException e) {
+            return true;
+        }
     }
 
     private Date extractExpiration(String token) {
@@ -74,12 +85,24 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
+        try{
+
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSignInKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+        } catch (ExpiredJwtException e) {
+            System.out.println("Token has expired");
+            throw e; // or handle it as needed
+        } catch (SignatureException e) {
+            System.out.println("Invalid signature");
+            throw e; // or handle it as needed
+        } catch (Exception e) {
+            System.out.println("Token parsing error");
+            throw e; // or handle it as needed
+        }
     }
 
     private Key getSignInKey() {

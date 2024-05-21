@@ -27,6 +27,13 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @GetMapping("/isTokenValid")
+    public ResponseEntity<Boolean> isTokenValid(@RequestHeader("Cookie") String token){
+        logger.info(token);
+
+        return ResponseEntity.ok(this.jwtService.isTokenExpired(token));
+    }
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginRequest loginUserDto) {
         User authenticatedUser = null;
