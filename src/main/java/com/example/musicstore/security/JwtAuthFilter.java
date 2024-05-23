@@ -1,5 +1,6 @@
 package com.example.musicstore.security;
 
+import com.example.musicstore.entities.User;
 import com.example.musicstore.rest.AuthController;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -32,38 +33,30 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final Logger logger = LoggerFactory.getLogger(AuthController.class);
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull FilterChain filterChain) throws ServletException, IOException {
-        //final String authHeader = request.getHeader("Authorization");
-        String jwtCookie = request.getHeader("Cookie");
-
-       /* if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
-        }*/
+        String jwtCookie = request.getHeader("Cookie").substring(6);
 
         if (jwtCookie == null || jwtService.isTokenExpired(jwtCookie)){
             filterChain.doFilter(request, response);
             return;
         }
 
-        logger.info(jwtCookie);
-
         try {
-            //final String jwt = authHeader.substring(7);
-            //final String jwt = jwtCookie.substring(7);
             final String jwt = jwtCookie;
             final String userEmail = jwtService.extractUsername(jwt);
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
             if (userEmail != null && authentication == null) {
-                UserDetails userDetails = this.userManagerConfig.loadUserByUsername(userEmail);
+                User user = this.userManagerConfig.loadUserByUsername(userEmail);
 
-                if (jwtService.isTokenValid(jwt, userDetails)) {
+                if (jwtService.isTokenValid(jwt, user)) {
+                    logger.info("isValid");
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                            userDetails,
+                            user,
                             null,
-                            userDetails.getAuthorities()
+                            user.getAuthorities()
                     );
+                    logger.info(String.valueOf(jwtService.isTokenValid(jwt, user)));
 
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);

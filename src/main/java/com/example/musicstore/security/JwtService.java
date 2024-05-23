@@ -8,6 +8,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,7 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
+    private final Logger logger = LoggerFactory.getLogger(JwtService.class);
     @Value("${security.jwt.secret-key}")
     private String secretKey;
 
@@ -58,20 +62,17 @@ public class JwtService {
                 .compact();
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails) {
+    public boolean isTokenValid(String token, User user) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        return (username.equals(user.getEmail())) && !isTokenExpired(token);
     }
-
-    /*public boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
-    }*/
 
     public boolean isTokenExpired(String token) {
         try {
             extractAllClaims(token);
             return false;
         } catch (ExpiredJwtException e) {
+            logger.info("Expired");
             return true;
         }
     }

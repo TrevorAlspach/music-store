@@ -10,10 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,9 +25,7 @@ public class AuthController {
     private AuthService authService;
 
     @GetMapping("/isTokenValid")
-    public ResponseEntity<Boolean> isTokenValid(@RequestHeader("Cookie") String token){
-        logger.info(token);
-
+    public ResponseEntity<Boolean> isTokenValid(@CookieValue(value = "token") String token){
         return ResponseEntity.ok(!this.jwtService.isTokenExpired(token));
     }
 
@@ -43,7 +38,10 @@ public class AuthController {
 
         //LoginResponse loginResponse = new LoginResponse(jwtToken, jwtService.getExpirationTime());
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add(HttpHeaders.SET_COOKIE, jwtToken);
+
+        HttpCookie cookie = ResponseCookie.from("token", jwtToken).path("/").build();
+        responseHeaders.add(HttpHeaders.SET_COOKIE, cookie.toString());
+
 
         return ResponseEntity.ok().headers(responseHeaders).build();
 
