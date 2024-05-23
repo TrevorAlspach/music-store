@@ -3,6 +3,7 @@ package com.example.musicstore.rest;
 import com.example.musicstore.entities.User;
 import com.example.musicstore.rest.dto.LoginRequest;
 import com.example.musicstore.rest.dto.LoginResponse;
+import com.example.musicstore.rest.dto.LogoutResponse;
 import com.example.musicstore.rest.dto.RegisterRequest;
 import com.example.musicstore.security.JwtService;
 import com.example.musicstore.services.AuthService;
@@ -45,6 +46,14 @@ public class AuthController {
 
         return ResponseEntity.ok().headers(responseHeaders).build();
 
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<LogoutResponse> logout(@CookieValue(value = "token") String token) {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        HttpCookie cookie = ResponseCookie.from("token", token).path("/").maxAge(0).build();
+        responseHeaders.add(HttpHeaders.SET_COOKIE, cookie.toString());
+        return ResponseEntity.ok().headers(responseHeaders).build();
     }
 
     @PostMapping("/signup")

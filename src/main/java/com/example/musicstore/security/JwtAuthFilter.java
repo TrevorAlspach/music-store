@@ -33,7 +33,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final Logger logger = LoggerFactory.getLogger(AuthController.class);
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull FilterChain filterChain) throws ServletException, IOException {
-        String jwtCookie = request.getHeader("Cookie").substring(6);
+        String jwtCookie = request.getHeader("Cookie");
+        if (jwtCookie != null){
+            jwtCookie = jwtCookie.substring(6);
+        }
+
 
         if (jwtCookie == null || jwtService.isTokenExpired(jwtCookie)){
             filterChain.doFilter(request, response);
