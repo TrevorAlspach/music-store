@@ -2,19 +2,13 @@ package com.example.musicstore.services;
 
 import com.example.musicstore.entities.User;
 import com.example.musicstore.repositories.UserRepository;
-import com.example.musicstore.rest.AuthController;
 import com.example.musicstore.rest.dto.LoginRequest;
 import com.example.musicstore.rest.dto.RegisterRequest;
 import com.example.musicstore.rest.exception.EmailAlreadyExistsException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

@@ -2,14 +2,13 @@ package com.example.musicstore.services;
 
 import com.example.musicstore.entities.Song;
 import com.example.musicstore.repositories.SongRepository;
-import com.example.musicstore.rest.SongMapper;
+import com.example.musicstore.rest.mapper.SongMapper;
 import com.example.musicstore.rest.dto.SongDTO;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SongService {

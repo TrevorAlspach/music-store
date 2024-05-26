@@ -1,5 +1,6 @@
 package com.example.musicstore.rest.exception;
 
+import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @Slf4j
 @RestControllerAdvice
@@ -30,6 +32,15 @@ public class GlobalExceptionHandler {
     public String handleMissingCookieException(MissingRequestHeaderException e){
         return e.getMessage();
     }
+
+    @ExceptionHandler(SignatureException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public String handleJwtSignatureException(SignatureException e){ return e.getMessage(); }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleNotFoundException(NoResourceFoundException e){ return e.getMessage(); }
+
 
     //Falback handler for all other exceptions
     @ExceptionHandler(Exception.class)

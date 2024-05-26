@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -43,6 +44,9 @@ public class User implements UserDetails {
 
     @Column(nullable = false, name = "ROLES")
     private String roles;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Playlist> playlists;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

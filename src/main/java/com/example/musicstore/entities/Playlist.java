@@ -5,27 +5,27 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 //@RequiredArgsConstructor
-@Table(name = "SONG")
-public class Song {
+@Table(name = "PLAYLIST")
+public class Playlist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "NAME", nullable = false)
+    @Column(name = "NAME", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "ARTIST_NAME", nullable = false)
-    private String artistName;
+    @OneToMany
+    private List<Song> songs;
 
-    @Column(name = "ALBUM_NAME")
-    private String albumName;
+    @ManyToOne
+    private User user;
 
-    ///@ManyToMany(mappedBy = "song")
-    //private Playlist playlist;
 }

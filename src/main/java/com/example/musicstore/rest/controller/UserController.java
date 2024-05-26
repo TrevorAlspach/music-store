@@ -1,4 +1,4 @@
-package com.example.musicstore.rest;
+package com.example.musicstore.rest.controller;
 
 import com.example.musicstore.entities.User;
 import com.example.musicstore.repositories.UserRepository;

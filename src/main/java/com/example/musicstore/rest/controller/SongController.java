@@ -1,4 +1,4 @@
-package com.example.musicstore.rest;
+package com.example.musicstore.rest.controller;
 
 import com.example.musicstore.entities.Song;
 import com.example.musicstore.rest.dto.SongDTO;

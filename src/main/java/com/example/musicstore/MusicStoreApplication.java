@@ -18,7 +18,7 @@ public class MusicStoreApplication {
 		SpringApplication.run(MusicStoreApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	public CommandLineRunner demo(UserRepository userRepository){
 		return (args -> {
 
@@ -26,6 +26,6 @@ public class MusicStoreApplication {
 				logger.info(user.toString());
 			});
 		});
-	}
+	}*/
 
 }
