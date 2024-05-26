@@ -18,28 +18,36 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EmailAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleEmailAlreadyExistsException(EmailAlreadyExistsException e) {
+        e.printStackTrace();
         return e.getMessage();
     }
 
     @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public String handleAuthentificationException(AuthenticationException e){
+        e.printStackTrace();
         return e.getMessage();
     }
 
     @ExceptionHandler(MissingRequestHeaderException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public String handleMissingCookieException(MissingRequestHeaderException e){
+
+        e.printStackTrace();
         return e.getMessage();
     }
 
     @ExceptionHandler(SignatureException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public String handleJwtSignatureException(SignatureException e){ return e.getMessage(); }
+    public String handleJwtSignatureException(SignatureException e){
+        e.printStackTrace();
+        return e.getMessage(); }
 
     @ExceptionHandler(NoResourceFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleNotFoundException(NoResourceFoundException e){ return e.getMessage(); }
+    public String handleNotFoundException(NoResourceFoundException e){
+        e.printStackTrace();
+        return e.getMessage(); }
 
 
     //Falback handler for all other exceptions
