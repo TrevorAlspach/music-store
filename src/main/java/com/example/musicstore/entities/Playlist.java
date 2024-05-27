@@ -22,6 +22,12 @@ public class Playlist {
     @Column(name = "NAME", nullable = false, unique = true)
     private String name;
 
+    @Column(name = "DESCRIPTION")
+    private String description;
+
+    @Column(name = "IMPORT_SOURCE")
+    private String importSource;
+
     @OneToMany
     private List<Song> songs;
 

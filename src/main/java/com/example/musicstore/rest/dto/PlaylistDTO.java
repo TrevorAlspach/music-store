@@ -14,5 +14,11 @@ public class PlaylistDTO {
     private String name;
 
     @Getter
+    private String description;
+
+    @Getter
+    private String importSource;
+
+    @Getter
     private List<SongDTO> songs;
 }
