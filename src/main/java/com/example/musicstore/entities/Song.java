@@ -21,10 +21,19 @@ public class Song {
     private String name;
 
     @Column(name = "ARTIST_NAME", nullable = false)
-    private String artistName;
+    private String artist;
 
     @Column(name = "ALBUM_NAME")
-    private String albumName;
+    private String album;
+
+    @Column(name = "RELEASE_YEAR")
+    private String releaseYear;
+
+    @Column(name = "TIME")
+    private String time;
+
+    @Column(name = "IMAGE_URL")
+    private String imageUrl;
 
     ///@ManyToMany(mappedBy = "song")
     //private Playlist playlist;

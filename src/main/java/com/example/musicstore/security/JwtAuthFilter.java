@@ -36,6 +36,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
 
+        if ("true".equals(request.getHeader("X-Internal-Request"))) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         if (jwtCookie != null){
             jwtCookie = jwtCookie.substring(6);
         }

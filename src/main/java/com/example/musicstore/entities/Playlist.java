@@ -25,10 +25,10 @@ public class Playlist {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "IMPORT_SOURCE")
-    private String importSource;
+    @Column(name = "SOURCE")
+    private String source;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Song> songs;
 
     @ManyToOne

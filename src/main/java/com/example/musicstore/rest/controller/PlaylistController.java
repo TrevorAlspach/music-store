@@ -48,4 +48,12 @@ public class PlaylistController {
         PlaylistDTO createdPlaylist = playlistService.createNewPlaylist(authenticatedUser, playlistDTO);
         return ResponseEntity.ok(createdPlaylist);
     }
+
+    @PostMapping("/createPlaylistWithSongs")
+    public ResponseEntity<PlaylistDTO> createNewPlaylistWithSongs(Authentication authentication, @RequestBody PlaylistDTO playlistDTO){
+        User authenticatedUser = (User) authentication.getPrincipal();
+
+        PlaylistDTO createdPlaylist = playlistService.createNewPlaylist(authenticatedUser, playlistDTO);
+        return ResponseEntity.ok(createdPlaylist);
+    }
 }

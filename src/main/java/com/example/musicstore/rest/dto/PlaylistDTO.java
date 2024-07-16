@@ -7,8 +7,8 @@ import java.util.List;
 
 @Data
 public class PlaylistDTO {
-    //@Getter
-    //private String id;
+    @Getter
+    private String id;
 
     @Getter
     private String name;
@@ -17,7 +17,7 @@ public class PlaylistDTO {
     private String description;
 
     @Getter
-    private String importSource;
+    private String source;
 
     @Getter
     private List<SongDTO> songs;

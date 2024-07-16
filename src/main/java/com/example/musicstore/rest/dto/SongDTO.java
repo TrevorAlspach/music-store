@@ -9,8 +9,17 @@ public class SongDTO {
     String name;
 
     @Getter
-    String artistName;
+    String artist;
 
     @Getter
-    String albumName;
+    String album;
+
+    @Getter
+    String releaseYear;
+
+    @Getter
+    String imageUrl;
+
+    @Getter
+    String time;
 }
