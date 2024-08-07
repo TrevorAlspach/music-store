@@ -20,5 +20,11 @@ public class PlaylistDTO {
     private String source;
 
     @Getter
+    private String imageUrl;
+
+    @Getter
     private List<SongDTO> songs;
+
+    @Getter
+    private int songCount;
 }

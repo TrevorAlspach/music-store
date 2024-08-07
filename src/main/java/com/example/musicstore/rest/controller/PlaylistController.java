@@ -7,16 +7,19 @@ import com.example.musicstore.rest.mapper.PlaylistMapper;
 import com.example.musicstore.security.JwtService;
 import com.example.musicstore.services.PlaylistService;
 import com.example.musicstore.services.SongService;
+import jakarta.websocket.server.PathParam;
 import org.mapstruct.factory.Mappers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/playlist")
@@ -39,6 +42,25 @@ public class PlaylistController {
         List<PlaylistDTO> playlists = playlistService.getPlaylistsForUser(authenticatedUser);
 
         return ResponseEntity.ok(playlists);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PlaylistDTO> getPlaylist(Authentication authentication, @PathVariable String id){
+        User authenticatedUser = (User) authentication.getPrincipal();
+
+        Optional<PlaylistDTO> playlistDTO = playlistService.getPlaylistFromId(id);
+
+        return playlistDTO.map(ResponseEntity::ok).orElseGet(()-> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @DeleteMapping("/deletePlaylist/{id}")
+    public ResponseEntity<PlaylistDTO> deletePlaylist(Authentication authentication, @PathVariable String id){
+        User authenticatedUser = (User) authentication.getPrincipal();
+
+        Optional<PlaylistDTO> playlistDTO = playlistService.deletePlaylist(id);
+
+        return playlistDTO.map(ResponseEntity::ok).orElseGet(()-> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+
     }
 
     @PostMapping("/createPlaylist")

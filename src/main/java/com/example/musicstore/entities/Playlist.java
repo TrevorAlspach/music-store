@@ -28,6 +28,12 @@ public class Playlist {
     @Column(name = "SOURCE")
     private String source;
 
+    @Column(name = "IMAGE_URL")
+    private String imageUrl;
+
+    @Column(name = "SONG_COUNT")
+    private int songCount;
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<Song> songs;
 
