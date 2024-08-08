@@ -4,7 +4,7 @@ import com.example.musicstore.entities.Playlist;
 import com.example.musicstore.entities.User;
 import com.example.musicstore.rest.dto.PlaylistDTO;
 import com.example.musicstore.rest.mapper.PlaylistMapper;
-import com.example.musicstore.security.JwtService;
+//import com.example.musicstore.security.JwtService;
 import com.example.musicstore.services.PlaylistService;
 import com.example.musicstore.services.SongService;
 import jakarta.websocket.server.PathParam;
@@ -27,21 +27,30 @@ public class PlaylistController {
 
     private final static Logger logger = LoggerFactory.getLogger(PlaylistController.class);
 
-    @Autowired
-    private JwtService jwtService;
+    //@Autowired
+    //private JwtService jwtService;
 
     @Autowired
     private PlaylistService playlistService;
 
     private final PlaylistMapper playlistMapper = Mappers.getMapper(PlaylistMapper.class);
 
-    @GetMapping("/allPlaylists")
+    /*@GetMapping("/allPlaylists")
     public ResponseEntity<List<PlaylistDTO>> getAllPlaylistsForUser(Authentication authentication){
         User authenticatedUser = (User) authentication.getPrincipal();
 
         List<PlaylistDTO> playlists = playlistService.getPlaylistsForUser(authenticatedUser);
 
         return ResponseEntity.ok(playlists);
+    }*/
+
+    @GetMapping("/allPlaylists")
+    public ResponseEntity<List<PlaylistDTO>> getAllPlaylistsForUser(){
+        //User authenticatedUser = (User) authentication.getPrincipal();
+
+        //List<PlaylistDTO> playlists = playlistService.getPlaylistsForUser(authenticatedUser);
+
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")

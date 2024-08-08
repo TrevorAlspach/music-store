@@ -20,7 +20,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
 
-@Component
+/*@Component
 @AllArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final HandlerExceptionResolver handlerExceptionResolver;
@@ -82,3 +82,4 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     }
 }
+*/

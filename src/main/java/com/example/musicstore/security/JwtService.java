@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-@Service
+/*@Service
 public class JwtService {
     private final Logger logger = LoggerFactory.getLogger(JwtService.class);
     @Value("${security.jwt.secret-key}")
@@ -110,4 +110,4 @@ public class JwtService {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-}
+}*/
