@@ -5,8 +5,10 @@ import com.example.musicstore.entities.User;
 import com.example.musicstore.rest.dto.PlaylistDTO;
 import com.example.musicstore.rest.mapper.PlaylistMapper;
 //import com.example.musicstore.security.JwtService;
+import com.example.musicstore.security.auth0.UserJwtAuthenticationToken;
 import com.example.musicstore.services.PlaylistService;
 import com.example.musicstore.services.SongService;
+import com.example.musicstore.services.UserService;
 import jakarta.websocket.server.PathParam;
 import org.mapstruct.factory.Mappers;
 import org.slf4j.Logger;
@@ -16,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,8 +30,8 @@ public class PlaylistController {
 
     private final static Logger logger = LoggerFactory.getLogger(PlaylistController.class);
 
-    //@Autowired
-    //private JwtService jwtService;
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private PlaylistService playlistService;
@@ -45,17 +48,17 @@ public class PlaylistController {
     }*/
 
     @GetMapping("/allPlaylists")
-    public ResponseEntity<List<PlaylistDTO>> getAllPlaylistsForUser(){
-        //User authenticatedUser = (User) authentication.getPrincipal();
+    public ResponseEntity<List<PlaylistDTO>> getAllPlaylistsForUser(@AuthenticationPrincipal Jwt jwt){
+        User user = userService.parseJwtForUser(jwt);
 
-        //List<PlaylistDTO> playlists = playlistService.getPlaylistsForUser(authenticatedUser);
+        List<PlaylistDTO> playlists = playlistService.getPlaylistsForUser(user);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(playlists);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PlaylistDTO> getPlaylist(Authentication authentication, @PathVariable String id){
-        User authenticatedUser = (User) authentication.getPrincipal();
+    public ResponseEntity<PlaylistDTO> getPlaylist(@AuthenticationPrincipal Jwt jwt, @PathVariable String id){
+        User user = userService.parseJwtForUser(jwt);
 
         Optional<PlaylistDTO> playlistDTO = playlistService.getPlaylistFromId(id);
 
@@ -63,8 +66,8 @@ public class PlaylistController {
     }
 
     @DeleteMapping("/deletePlaylist/{id}")
-    public ResponseEntity<PlaylistDTO> deletePlaylist(Authentication authentication, @PathVariable String id){
-        User authenticatedUser = (User) authentication.getPrincipal();
+    public ResponseEntity<PlaylistDTO> deletePlaylist(@AuthenticationPrincipal Jwt jwt, @PathVariable String id){
+        User user = userService.parseJwtForUser(jwt);
 
         Optional<PlaylistDTO> playlistDTO = playlistService.deletePlaylist(id);
 
@@ -73,18 +76,18 @@ public class PlaylistController {
     }
 
     @PostMapping("/createPlaylist")
-    public ResponseEntity<PlaylistDTO> createNewPlaylist(Authentication authentication, @RequestBody PlaylistDTO playlistDTO){
-        User authenticatedUser = (User) authentication.getPrincipal();
+    public ResponseEntity<PlaylistDTO> createNewPlaylist(@AuthenticationPrincipal Jwt jwt, @RequestBody PlaylistDTO playlistDTO){
+        User user = userService.parseJwtForUser(jwt);
 
-        PlaylistDTO createdPlaylist = playlistService.createNewPlaylist(authenticatedUser, playlistDTO);
+        PlaylistDTO createdPlaylist = playlistService.createNewPlaylist(user, playlistDTO);
         return ResponseEntity.ok(createdPlaylist);
     }
 
     @PostMapping("/createPlaylistWithSongs")
-    public ResponseEntity<PlaylistDTO> createNewPlaylistWithSongs(Authentication authentication, @RequestBody PlaylistDTO playlistDTO){
-        User authenticatedUser = (User) authentication.getPrincipal();
+    public ResponseEntity<PlaylistDTO> createNewPlaylistWithSongs(@AuthenticationPrincipal Jwt jwt, @RequestBody PlaylistDTO playlistDTO){
+        User user = userService.parseJwtForUser(jwt);
 
-        PlaylistDTO createdPlaylist = playlistService.createNewPlaylist(authenticatedUser, playlistDTO);
+        PlaylistDTO createdPlaylist = playlistService.createNewPlaylist(user, playlistDTO);
         return ResponseEntity.ok(createdPlaylist);
     }
 }
