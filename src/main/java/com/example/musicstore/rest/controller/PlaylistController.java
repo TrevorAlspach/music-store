@@ -38,15 +38,6 @@ public class PlaylistController {
 
     private final PlaylistMapper playlistMapper = Mappers.getMapper(PlaylistMapper.class);
 
-    /*@GetMapping("/allPlaylists")
-    public ResponseEntity<List<PlaylistDTO>> getAllPlaylistsForUser(Authentication authentication){
-        User authenticatedUser = (User) authentication.getPrincipal();
-
-        List<PlaylistDTO> playlists = playlistService.getPlaylistsForUser(authenticatedUser);
-
-        return ResponseEntity.ok(playlists);
-    }*/
-
     @GetMapping("/allPlaylists")
     public ResponseEntity<List<PlaylistDTO>> getAllPlaylistsForUser(@AuthenticationPrincipal Jwt jwt){
         User user = userService.parseJwtForUser(jwt);
