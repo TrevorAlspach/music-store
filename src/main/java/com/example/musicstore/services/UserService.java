@@ -18,14 +18,14 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User createOrFindUser(String email, String sub, String username,Collection<GrantedAuthority> authorities){
+    public User createOrFindUser(String email, Collection<GrantedAuthority> authorities){
         Optional<User> userOpt = findUserByEmail(email);
 
         if (!userOpt.isPresent()){
             User user = new User();
             //user.setId(sub);
             user.setEmail(email);
-            user.setUsername(username);
+            user.setUsername(email);
             //user.setRoles();
             return createNewUser(user);
         } else {

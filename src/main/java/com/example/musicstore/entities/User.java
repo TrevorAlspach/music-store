@@ -31,7 +31,7 @@ public class User implements UserDetails {
     @Column(nullable = false, name = "EMAIL", unique = true)
     private String email;
 
-    @Column(nullable = false, name = "PASSWORD")
+    @Column( name = "PASSWORD")
     private String password;
 
     @CreationTimestamp
@@ -42,8 +42,8 @@ public class User implements UserDetails {
     @Column(name = "UPDATED_AT")
     private Date updatedAt;
 
-    @Column(nullable = false, name = "ROLES")
-    private String roles;
+    //@Column(nullable = false, name = "ROLES")
+    //private List<GrantedAuthority> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Playlist> playlists;
@@ -55,12 +55,8 @@ public class User implements UserDetails {
     private String appleMusicRefreshToken;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays
-                .stream(getRoles()
-                        .split(","))
-                .map(SimpleGrantedAuthority::new)
-                .toList();
+    public Collection<GrantedAuthority> getAuthorities() {
+        return this.getAuthorities();
     }
 
     @Override

@@ -12,6 +12,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Slf4j
 @AllArgsConstructor
 @Service
@@ -34,7 +36,7 @@ public class AuthService {
         user.setUsername(input.getEmail());
         user.setEmail(input.getEmail());
         user.setPassword(passwordEncoder.encode(input.getPassword()));
-        user.setRoles(input.getRoles());
+        //user.setRoles(new ArrayList<>());
 
         return userRepository.save(user);
     }
