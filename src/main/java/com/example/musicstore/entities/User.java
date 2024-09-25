@@ -54,6 +54,9 @@ public class User implements UserDetails {
     @Column(name = "APPLE_MUSIC_REFRESH_TOKEN")
     private String appleMusicRefreshToken;
 
+    @Column(name = "YOUTUBE_MUSIC_REFRESH_TOKEN")
+    private String youtubeMusicRefreshToken;
+
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
         return this.getAuthorities();

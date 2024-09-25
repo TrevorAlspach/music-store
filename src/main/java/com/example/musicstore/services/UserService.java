@@ -1,5 +1,6 @@
 package com.example.musicstore.services;
 
+import com.example.musicstore.config.ExternalService;
 import com.example.musicstore.entities.User;
 import com.example.musicstore.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +33,25 @@ public class UserService {
         } else {
             return userOpt.get();
         }
+    }
+
+    public List<ExternalService> getConnectedServicesForUser(User user){
+        List<ExternalService> connectedServices = new ArrayList<>();
+
+        if (user.getSpotifyRefreshToken() != null){
+            connectedServices.add(ExternalService.SPOTIFY);
+        }
+
+        if (user.getAppleMusicRefreshToken() != null){
+            connectedServices.add(ExternalService.APPLE_MUSIC);
+        }
+
+        if (user.getYoutubeMusicRefreshToken() != null){
+            connectedServices.add(ExternalService.YOUTUBE_MUSIC);
+        }
+
+        return connectedServices;
+
     }
 
     public User parseJwtForUser(Jwt jwt){

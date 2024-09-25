@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 
 @Data
-public class SpotifyRefreshTokenDTO {
+public class RefreshTokenDTO {
     @Getter
     private String token;
 }

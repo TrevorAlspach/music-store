@@ -27,7 +27,7 @@ public class AuthService {
 
     private AuthenticationManager authenticationManager;
 
-    public User signup(RegisterRequest input) {
+    /*public User signup(RegisterRequest input) {
         if (userRepository.findByEmail(input.getEmail()).isPresent()){
             throw new EmailAlreadyExistsException("Email already exists: " + input.getEmail());
         }
@@ -39,9 +39,9 @@ public class AuthService {
         //user.setRoles(new ArrayList<>());
 
         return userRepository.save(user);
-    }
+    }*/
 
-    public User authenticate(LoginRequest input) {
+    /*public User authenticate(LoginRequest input) {
 
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -52,5 +52,5 @@ public class AuthService {
 
 
         return userRepository.findByEmail(input.getEmail()).orElseThrow();
-    }
+    }*/
 }

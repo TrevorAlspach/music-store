@@ -25,13 +25,13 @@ public class MusicStoreApplication {
 	@Bean
 	public CommandLineRunner demo(AuthService authService, PasswordEncoder passwordEncoder){
 		return (args -> {
-			RegisterRequest registerRequest = new RegisterRequest();
+			/*RegisterRequest registerRequest = new RegisterRequest();
 			registerRequest.setEmail("trevoralspach@gmail.com");
 			registerRequest.setUsername("trevoralspach@gmail.com");
 			registerRequest.setRoles("ADMIN");
 			registerRequest.setPassword("password");
 
-			authService.signup(registerRequest);
+			authService.signup(registerRequest);*/
 			/*userRepository.findAll().forEach(user -> {
 				logger.info(user.toString());
 			});*/
