@@ -5,7 +5,11 @@ import com.example.musicstore.entities.User;
 import com.example.musicstore.rest.dto.ConnectedServiceDTO;
 import com.example.musicstore.rest.dto.LoginResponse;
 import com.example.musicstore.rest.dto.RefreshTokenDTO;
+import com.example.musicstore.rest.dto.UserDTO;
+import com.example.musicstore.rest.mapper.PlaylistMapper;
+import com.example.musicstore.rest.mapper.UserMapper;
 import com.example.musicstore.services.UserService;
+import org.mapstruct.factory.Mappers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +30,15 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
     @Autowired
     private UserService userService;
 
     @GetMapping("/createOrFindUser")
-    public ResponseEntity<LoginResponse> getOrCreateUser(@AuthenticationPrincipal Jwt jwt, Authentication authentication){
-        this.userService.createOrFindUser(jwt.getClaimAsString("email"), (Collection<GrantedAuthority>) authentication.getAuthorities());
-        return ResponseEntity.ok().build();
+    public ResponseEntity<UserDTO> getOrCreateUser(@AuthenticationPrincipal Jwt jwt, Authentication authentication){
+        User user = this.userService.createOrFindUser(jwt.getClaimAsString("email"), (Collection<GrantedAuthority>) authentication.getAuthorities());
+        UserDTO userDTO = this.userMapper.toDTO(user);
+        return ResponseEntity.ok(userDTO);
     }
 
     @GetMapping("/connectedServices")
