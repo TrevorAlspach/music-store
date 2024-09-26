@@ -14,5 +14,6 @@ public class UserDTO {
     Date createdAt;
     Date updatedAt;
     Long id;
+    String oauthId;
     Collection<GrantedAuthority> authorities;
 }

@@ -8,6 +8,7 @@ import com.example.musicstore.rest.dto.RefreshTokenDTO;
 import com.example.musicstore.rest.dto.UserDTO;
 import com.example.musicstore.rest.mapper.PlaylistMapper;
 import com.example.musicstore.rest.mapper.UserMapper;
+import com.example.musicstore.services.OktaManagementService;
 import com.example.musicstore.services.UserService;
 import org.mapstruct.factory.Mappers;
 import org.slf4j.Logger;
@@ -34,9 +35,25 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private OktaManagementService oktaManagementService;
+
     @GetMapping("/createOrFindUser")
     public ResponseEntity<UserDTO> getOrCreateUser(@AuthenticationPrincipal Jwt jwt, Authentication authentication){
-        User user = this.userService.createOrFindUser(jwt.getClaimAsString("email"), (Collection<GrantedAuthority>) authentication.getAuthorities());
+        logger.info(jwt.getTokenValue());
+        logger.info("ABOVE IS JWT");
+        User user = this.userService.createOrFindUser(jwt.getClaimAsString("email"), jwt.getClaimAsString("sub"),(Collection<GrantedAuthority>) authentication.getAuthorities());
+        UserDTO userDTO = this.userMapper.toDTO(user);
+        return ResponseEntity.ok(userDTO);
+    }
+
+    @DeleteMapping("/deleteUser")
+    public ResponseEntity<UserDTO> deleteUser(@AuthenticationPrincipal Jwt jwt, Authentication authentication){
+        User user = userService.parseJwtForUser(jwt);
+        //delete user data in syncify db
+        this.userService.deleteUser(user);
+        //use management api to delete user on okta side
+        this.oktaManagementService.deleteUser(user.getOauthId());
         UserDTO userDTO = this.userMapper.toDTO(user);
         return ResponseEntity.ok(userDTO);
     }

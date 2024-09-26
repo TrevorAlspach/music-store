@@ -20,7 +20,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User createOrFindUser(String email, Collection<GrantedAuthority> authorities){
+    public User createOrFindUser(String email, String oauthId,Collection<GrantedAuthority> authorities){
         Optional<User> userOpt = findUserByEmail(email);
 
         if (!userOpt.isPresent()){
@@ -28,6 +28,7 @@ public class UserService {
             //user.setId(sub);
             user.setEmail(email);
             user.setUsername(email);
+            user.setOauthId(oauthId);
             //user.setRoles();
             return createNewUser(user);
         } else {
@@ -62,6 +63,10 @@ public class UserService {
 
     public User createNewUser(User user){
         return this.userRepository.save(user);
+    }
+
+    public void deleteUser(User user){
+        this.userRepository.delete(user);
     }
 
     public Optional<User> findUserByEmail(String email){

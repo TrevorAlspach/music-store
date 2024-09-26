@@ -39,7 +39,8 @@ public class OauthUserFilter extends OncePerRequestFilter {
 
             // Call the service to get or create the user
             String email = jwt.getClaimAsString("email");
-            userService.createOrFindUser(email, (Collection<GrantedAuthority>) authentication.getAuthorities());
+            String userId = jwt.getClaimAsString("sub");
+            userService.createOrFindUser(email, userId,(Collection<GrantedAuthority>) authentication.getAuthorities());
         }
 
         // Continue with the filter chain
