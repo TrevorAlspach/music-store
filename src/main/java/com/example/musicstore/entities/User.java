@@ -22,13 +22,13 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "OAUTH_ID", nullable = false)
+    @Column(name = "OAUTH_ID", nullable = false, unique = true)
     private String oauthId;
 
     @Column(name = "USER_NAME", nullable = false)
     private String username;
 
-    @Column(nullable = false, name = "EMAIL", unique = true)
+    @Column(nullable = false, name = "EMAIL")
     private String email;
 
     @Column( name = "PASSWORD")

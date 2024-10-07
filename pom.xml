@@ -113,6 +113,12 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -137,7 +143,9 @@
 					</execution>
 				</executions>
 				<configuration>
-					<imageName>${project.name}</imageName>
+					<image>
+						<name>tla18b/music-store</name>
+					</image>
 				</configuration>
 			</plugin>
 		</plugins>
