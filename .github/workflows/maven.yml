@@ -47,4 +47,12 @@ jobs:
 
         # Tag the image
         docker tag ${{ secrets.DOCKER_USERNAME }}/music-store $IMAGE_NAME:$IMAGE_TAG
+
+    - name: Push Docker Image to Docker Hub
+      run: |
+        IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/music-store"
+        IMAGE_TAG="latest"  # Use the same tag as above
+
+        # Push the image
+        docker push $IMAGE_NAME:$IMAGE_TAG
     
