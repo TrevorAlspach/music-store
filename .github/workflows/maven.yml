@@ -42,9 +42,9 @@ jobs:
     - name: Tag Docker Image
       run: |
         docker image ls
-        IMAGE_NAME="tla18b/music-store"  # Change this to your Docker Hub repository name
+        IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/music-store"  # Change this to your Docker Hub repository name
         IMAGE_TAG="latest"  # You can use a different tag or parameterize it
 
         # Tag the image
-        docker tag music-store:latest $IMAGE_NAME:$IMAGE_TAG
+        docker tag ${{ secrets.DOCKER_USERNAME }}/music-store $IMAGE_NAME:$IMAGE_TAG
     
