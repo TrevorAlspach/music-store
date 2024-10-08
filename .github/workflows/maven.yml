@@ -35,3 +35,15 @@ jobs:
         -DOKTA_MANAGEMENTAPI_AUDIENCE=${{secrets.OKTA_MANAGEMENTAPI_AUDIENCE}} -DOKTA_MANAGEMENTAPI_DOMAIN=${{secrets.OKTA_MANAGEMENTAPI_DOMAIN}} \
         -DOKTA_MANAGEMENTAPI_CLIENTID=${{secrets.OKTA_MANAGEMENTAPI_CLIENTID}} -DOKTA_MANAGEMENTAPI_CLIENTSECRET=${{secrets.OKTA_MANAGEMENTAPI_CLIENTSECRET}} \
         -DOKTA_MANAGEMENTAPI_GRANTTYPE=${{secrets.OKTA_MANAGEMENTAPI_GRANTTYPE}}
+
+    - name: Log into Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    - name: Tag Docker Image
+      run: |
+        IMAGE_NAME="tla18b/music-store"  # Change this to your Docker Hub repository name
+        IMAGE_TAG="latest"  # You can use a different tag or parameterize it
+
+        # Tag the image
+        docker tag your-app:latest $IMAGE_NAME:$IMAGE_TAG
+    
