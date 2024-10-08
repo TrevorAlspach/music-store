@@ -45,5 +45,5 @@ jobs:
         IMAGE_TAG="latest"  # You can use a different tag or parameterize it
 
         # Tag the image
-        docker tag your-app:latest $IMAGE_NAME:$IMAGE_TAG
+        docker tag music-store:latest $IMAGE_NAME:$IMAGE_TAG
     
