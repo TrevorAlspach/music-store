@@ -31,7 +31,7 @@ public class OauthUserFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        // Get the authentication object from the SecurityContext
+        /*// Get the authentication object from the SecurityContext
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication instanceof JwtAuthenticationToken) {
@@ -41,7 +41,7 @@ public class OauthUserFilter extends OncePerRequestFilter {
             String email = jwt.getClaimAsString("email");
             String userId = jwt.getClaimAsString("sub");
             userService.createOrFindUser(email, userId,(Collection<GrantedAuthority>) authentication.getAuthorities());
-        }
+        }*/
 
         // Continue with the filter chain
         filterChain.doFilter(request, response);
