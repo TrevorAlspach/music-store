@@ -34,4 +34,25 @@ jobs:
         -DOKTA_OAUTH2_AUDIENCE=${{secrets.OKTA_OAUTH2_AUDIENCE}} -DOKTA_MANAGEMENTAPI_TOKENURL=${{secrets.OKTA_MANAGEMENTAPI_TOKENURL}} \
         -DOKTA_MANAGEMENTAPI_AUDIENCE=${{secrets.OKTA_MANAGEMENTAPI_AUDIENCE}} -DOKTA_MANAGEMENTAPI_DOMAIN=${{secrets.OKTA_MANAGEMENTAPI_DOMAIN}} \
         -DOKTA_MANAGEMENTAPI_CLIENTID=${{secrets.OKTA_MANAGEMENTAPI_CLIENTID}} -DOKTA_MANAGEMENTAPI_CLIENTSECRET=${{secrets.OKTA_MANAGEMENTAPI_CLIENTSECRET}} \
-        -DOKTA_MANAGEMENTAPI_GRANTTYPE=${{secrets.OKTA_MANAGEMENTAPI_GRANTTYPE}}
+        -DOKTA_MANAGEMENTAPI_GRANTTYPE=${{secrets.OKTA_MANAGEMENTAPI_GRANTTYPE}} -DALLOWED_ORIGIN=${{secrets.ALLOWEDORIGIN}} 
+
+    - name: Log into Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    - name: Tag Docker Image
+      run: |
+        docker image ls
+        IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/music-store"  # Change this to your Docker Hub repository name
+        IMAGE_TAG="latest"  # You can use a different tag or parameterize it
+
+        # Tag the image
+        docker tag ${{ secrets.DOCKER_USERNAME }}/music-store $IMAGE_NAME:$IMAGE_TAG
+
+    - name: Push Docker Image to Docker Hub
+      run: |
+        IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/music-store"
+        IMAGE_TAG="latest"  # Use the same tag as above
+
+        # Push the image
+        docker push $IMAGE_NAME:$IMAGE_TAG
+    
