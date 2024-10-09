@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/playlist")
+@RequestMapping("api/playlist")
 public class PlaylistController {
 
     private final static Logger logger = LoggerFactory.getLogger(PlaylistController.class);
