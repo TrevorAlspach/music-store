@@ -3,6 +3,7 @@ package com.example.musicstore.security;
 import com.example.musicstore.security.auth0.OauthUserFilter;
 import com.example.musicstore.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,6 +32,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    @Value("${allowedOrigin}")
+    private String allowedOrigin;
+
     private final UserDetailsService userManagerConfig;
     private final UserService userService;
 
@@ -56,7 +60,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         //Make the below setting as * to allow connection from any hos
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:8090"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200", allowedOrigin));
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "DELETE"));
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setAllowedHeaders(List.of("*"));
