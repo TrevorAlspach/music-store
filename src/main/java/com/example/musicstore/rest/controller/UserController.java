@@ -3,10 +3,8 @@ package com.example.musicstore.rest.controller;
 import com.example.musicstore.config.ExternalService;
 import com.example.musicstore.entities.User;
 import com.example.musicstore.rest.dto.ConnectedServiceDTO;
-import com.example.musicstore.rest.dto.LoginResponse;
-import com.example.musicstore.rest.dto.RefreshTokenDTO;
+import com.example.musicstore.rest.dto.TokenDTO;
 import com.example.musicstore.rest.dto.UserDTO;
-import com.example.musicstore.rest.mapper.PlaylistMapper;
 import com.example.musicstore.rest.mapper.UserMapper;
 import com.example.musicstore.services.OktaManagementService;
 import com.example.musicstore.services.UserService;
@@ -71,15 +69,15 @@ public class UserController {
     }
 
     @GetMapping("/spotifyRefreshToken")
-    ResponseEntity<RefreshTokenDTO> getSpotifyRefreshToken(@AuthenticationPrincipal Jwt jwt){
+    ResponseEntity<TokenDTO> getSpotifyRefreshToken(@AuthenticationPrincipal Jwt jwt){
         User user = userService.parseJwtForUser(jwt);
-        RefreshTokenDTO tokenDTO = new RefreshTokenDTO();
+        TokenDTO tokenDTO = new TokenDTO();
         tokenDTO.setToken(user.getSpotifyRefreshToken());
         return ResponseEntity.ok(tokenDTO);
     }
 
     @PostMapping("/spotifyRefreshToken")
-    ResponseEntity<RefreshTokenDTO> updateSpotifyRefreshToken(@RequestBody RefreshTokenDTO tokenDTO, @AuthenticationPrincipal Jwt jwt){
+    ResponseEntity<TokenDTO> updateSpotifyRefreshToken(@RequestBody TokenDTO tokenDTO, @AuthenticationPrincipal Jwt jwt){
         User user = userService.parseJwtForUser(jwt);
         user.setSpotifyRefreshToken(tokenDTO.getToken());
         User updatedUser = userService.updateUser(user);
@@ -89,15 +87,15 @@ public class UserController {
     }
 
     @GetMapping("/appleMusicRefreshToken")
-    ResponseEntity<RefreshTokenDTO> getAppleMusicRefreshToken(@AuthenticationPrincipal Jwt jwt){
+    ResponseEntity<TokenDTO> getAppleMusicRefreshToken(@AuthenticationPrincipal Jwt jwt){
         User user = userService.parseJwtForUser(jwt);
-        RefreshTokenDTO tokenDTO = new RefreshTokenDTO();
+        TokenDTO tokenDTO = new TokenDTO();
         tokenDTO.setToken(user.getAppleMusicRefreshToken());
         return ResponseEntity.ok(tokenDTO);
     }
 
     @PostMapping("/appleMusicRefreshToken")
-    ResponseEntity<RefreshTokenDTO> updateAppleMusicRefreshToken(@RequestBody RefreshTokenDTO tokenDTO, @AuthenticationPrincipal Jwt jwt){
+    ResponseEntity<TokenDTO> updateAppleMusicRefreshToken(@RequestBody TokenDTO tokenDTO, @AuthenticationPrincipal Jwt jwt){
         User user = userService.parseJwtForUser(jwt);
         user.setSpotifyRefreshToken(tokenDTO.getToken());
         User updatedUser = userService.updateUser(user);

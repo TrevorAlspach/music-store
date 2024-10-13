@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 
 @Data
-public class RefreshTokenDTO {
+public class TokenDTO {
     @Getter
     private String token;
 }
