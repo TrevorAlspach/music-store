@@ -6,9 +6,13 @@ import lombok.Data;
 @Data
 public class ConnectedServiceDTO {
     ExternalService externalService;
+    Boolean expired;
+    String displayName;
 
-    public ConnectedServiceDTO(ExternalService externalService){
+    public ConnectedServiceDTO(ExternalService externalService, Boolean expired){
         this.externalService = externalService;
+        this.expired = expired;
+        this.displayName = externalService.getDisplayName();
     }
 
 }

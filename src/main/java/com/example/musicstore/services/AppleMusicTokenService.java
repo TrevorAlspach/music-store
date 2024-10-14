@@ -74,7 +74,7 @@ public class AppleMusicTokenService {
         // Create JWT token
         String jwt = Jwts.builder()
                 .setHeaderParam("kid", appleMusicKeyId)
-                .claim("origin", origin)
+                //.claim("origin", origin)
                 .setIssuer(appleMusicTeamId)
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(expirationDate.toInstant()))

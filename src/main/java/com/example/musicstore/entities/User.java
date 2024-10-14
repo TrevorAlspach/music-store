@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.Instant;
 import java.util.*;
 
 @Entity
@@ -51,8 +52,8 @@ public class User implements UserDetails {
     @Column(name = "SPOTIFY_REFRESH_TOKEN")
     private String spotifyRefreshToken;
 
-    @Column(name = "APPLE_MUSIC_REFRESH_TOKEN")
-    private String appleMusicRefreshToken;
+    @Column(name = "APPLE_MUSIC_USER_TOKEN_EXPIRATION")
+    private Instant appleMusicUserTokenExpiration;
 
     @Column(name = "YOUTUBE_MUSIC_REFRESH_TOKEN")
     private String youtubeMusicRefreshToken;

@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -43,7 +44,7 @@ public class UserService {
             connectedServices.add(ExternalService.SPOTIFY);
         }
 
-        if (user.getAppleMusicRefreshToken() != null){
+        if (user.getAppleMusicUserTokenExpiration() != null){
             connectedServices.add(ExternalService.APPLE_MUSIC);
         }
 
@@ -53,6 +54,15 @@ public class UserService {
 
         return connectedServices;
 
+    }
+
+    public Boolean appleMusicExpiredForUser(User user){
+        Instant timestamp = user.getAppleMusicUserTokenExpiration();
+        if (timestamp == null){
+            return null;
+        } else {
+            return user.getAppleMusicUserTokenExpiration().isBefore(Instant.now());
+        }
     }
 
     public User parseJwtForUser(Jwt jwt){
