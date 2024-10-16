@@ -44,7 +44,7 @@ public class UserService {
             connectedServices.add(ExternalService.SPOTIFY);
         }
 
-        if (user.getAppleMusicUserTokenExpiration() != null){
+        if (user.getAppleMusicUserToken() != null){
             connectedServices.add(ExternalService.APPLE_MUSIC);
         }
 
@@ -56,14 +56,14 @@ public class UserService {
 
     }
 
-    public Boolean appleMusicExpiredForUser(User user){
+    /*public Boolean appleMusicExpiredForUser(User user){
         Instant timestamp = user.getAppleMusicUserTokenExpiration();
         if (timestamp == null){
             return null;
         } else {
             return user.getAppleMusicUserTokenExpiration().isBefore(Instant.now());
         }
-    }
+    }*/
 
     public User parseJwtForUser(Jwt jwt){
         String email = jwt.getClaimAsString("email");

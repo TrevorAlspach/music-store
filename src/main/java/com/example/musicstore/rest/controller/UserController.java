@@ -62,14 +62,14 @@ public class UserController {
         User user = userService.parseJwtForUser(jwt);
         List<ConnectedServiceDTO> connectedServiceDTOs = new ArrayList<>();
         List<ExternalService> externalServices = userService.getConnectedServicesForUser(user);
-        Boolean appleMusicExpired = userService.appleMusicExpiredForUser(user);
+        //Boolean appleMusicExpired = userService.appleMusicExpiredForUser(user);
 
         for (ExternalService externalService: externalServices){
-            boolean expired = false;
-            if (externalService.getDisplayName().equals(ExternalService.APPLE_MUSIC)){
+            //boolean expired = false;
+            /*if (externalService.getDisplayName().equals(ExternalService.APPLE_MUSIC)){
                 expired = appleMusicExpired;
-            }
-            connectedServiceDTOs.add(new ConnectedServiceDTO(externalService, expired));
+            }*/
+            connectedServiceDTOs.add(new ConnectedServiceDTO(externalService));
         }
         return ResponseEntity.ok(connectedServiceDTOs);
     }
@@ -88,25 +88,25 @@ public class UserController {
         user.setSpotifyRefreshToken(tokenDTO.getToken());
         User updatedUser = userService.updateUser(user);
         tokenDTO.setToken(updatedUser.getSpotifyRefreshToken());
-        logger.info("updated token is" + updatedUser.getSpotifyRefreshToken());
+        logger.debug("updated token is" + updatedUser.getSpotifyRefreshToken());
         return ResponseEntity.ok(tokenDTO);
     }
 
     @GetMapping("/appleMusicUserToken")
-    ResponseEntity<TimestampDTO> getAppleMusicUserTokenExpiration(@AuthenticationPrincipal Jwt jwt){
+    ResponseEntity<TokenDTO> getAppleMusicUserToken( @AuthenticationPrincipal Jwt jwt){
         User user = userService.parseJwtForUser(jwt);
-        TimestampDTO timestampDTO = new TimestampDTO();
-        timestampDTO.setExpiresAt(user.getAppleMusicUserTokenExpiration());
-        return ResponseEntity.ok(timestampDTO);
+        TokenDTO tokenDTO = new TokenDTO();
+        tokenDTO.setToken(user.getAppleMusicUserToken());
+        return ResponseEntity.ok(tokenDTO);
     }
 
     @PostMapping("/appleMusicUserToken")
-    ResponseEntity<TimestampDTO> updateAppleMusicUserTokenExpiration(@RequestBody TimestampDTO timestampDTO, @AuthenticationPrincipal Jwt jwt){
+    ResponseEntity<TokenDTO> updateAppleMusicUserToken(@RequestBody TokenDTO tokenDTO, @AuthenticationPrincipal Jwt jwt){
         User user = userService.parseJwtForUser(jwt);
-        user.setAppleMusicUserTokenExpiration(timestampDTO.getExpiresAt());
+        user.setAppleMusicUserToken(tokenDTO.getToken());
         User updatedUser = userService.updateUser(user);
-        timestampDTO.setExpiresAt(updatedUser.getAppleMusicUserTokenExpiration());
-        return ResponseEntity.ok(timestampDTO);
+        tokenDTO.setToken(updatedUser.getAppleMusicUserToken());
+        return ResponseEntity.ok(tokenDTO);
     }
 
 

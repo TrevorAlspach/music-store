@@ -52,8 +52,8 @@ public class User implements UserDetails {
     @Column(name = "SPOTIFY_REFRESH_TOKEN")
     private String spotifyRefreshToken;
 
-    @Column(name = "APPLE_MUSIC_USER_TOKEN_EXPIRATION")
-    private Instant appleMusicUserTokenExpiration;
+    @Column(name = "APPLE_MUSIC_USER_TOKEN")
+    private String appleMusicUserToken;
 
     @Column(name = "YOUTUBE_MUSIC_REFRESH_TOKEN")
     private String youtubeMusicRefreshToken;
